@@ -17,6 +17,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    
+    
+    // lets crash something!
+    NSString *testObject = nil;
+    
+    NSDictionary *testDictionary = @{@"test": testObject};
+    
 }
 
 - (void)didReceiveMemoryWarning {

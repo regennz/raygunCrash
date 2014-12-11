@@ -7,6 +7,9 @@
 //
 
 #import "AppDelegate.h"
+#import <Raygun4iOS/Raygun.h>
+
+#define kRaygunApiKey @"INSERT RAYGUN KEY HERE"
 
 @interface AppDelegate ()
 
@@ -17,6 +20,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    [Raygun sharedReporterWithApiKey:kRaygunApiKey];
+
+    
+    
     return YES;
 }
 
