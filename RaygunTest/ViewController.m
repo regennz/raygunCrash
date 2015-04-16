@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import <Raygun4iOS/Raygun.h>
 
 @interface ViewController ()
 
@@ -16,19 +17,22 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
     
-    
-    // lets crash something!
-    NSString *testObject = nil;
-    
-    NSDictionary *testDictionary = @{@"test": testObject};
+    [self immediateCrash];
     
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+- (void)immediateCrash {
+    // if this is set, it will crash a manual send.
+    [[Raygun sharedReporter] setUserCustomData:@{@"test":@"value"}];
+    
+    [[Raygun sharedReporter] send:[NSException exceptionWithName:@"TEST EXCEPTION NAME" reason:@"TEST REASON" userInfo:nil] withTags:nil withUserCustomData:nil];
 }
 
 @end

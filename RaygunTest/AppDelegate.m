@@ -22,8 +22,6 @@
     // Override point for customization after application launch.
     
     [Raygun sharedReporterWithApiKey:kRaygunApiKey];
-
-    
     
     return YES;
 }

@@ -1,10 +1,10 @@
 PODS:
-  - Raygun4iOS (1.5.0)
+  - Raygun4iOS (1.6.0)
 
 DEPENDENCIES:
   - Raygun4iOS
 
 SPEC CHECKSUMS:
-  Raygun4iOS: 3eaea970f66674ff2c9e43da070f329aeb903db6
+  Raygun4iOS: 8ee12665793e7e0420e57bbe8deb52eaf742ef47
 
 COCOAPODS: 0.35.0

@@ -28,8 +28,11 @@
 
 @property (nonatomic, readonly, copy) NSString *apiKey;
 
+@property (nonatomic, readwrite, retain) NSDictionary *userCustomData;
+
 /**
- Creates and returns a singleton raygun reporter with the given API key. If a singleton has already been created, this method has no effect
+ Creates and returns a singleton raygun reporter with the given API key. The reporter will automatically report crashes.
+ If a singleton has already been created, this method has no effect
 
  @param theApiKey The Raygun API key
 
@@ -37,6 +40,18 @@
          specified API key
 */
 + (id)sharedReporterWithApiKey:(NSString *)theApiKey;
+
+/**
+ Creates and returns a singleton raygun reporter with the given API key and an option to disable crash reporting.
+ If a singleton has already been created, this method has no effect
+ 
+ @param theApiKey The Raygun API key
+ @param crashReporting Whether or not to enable crash reporting
+ 
+ @return A new singleton crash reporter with the given API key, or an existing reporter. The existing reporter will have the originally
+ specified API key
+ */
++ (id)sharedReporterWithApiKey:(NSString *)theApiKey withCrashReporting:(bool)crashReporting;
 
 /**
  Returns the shared singleton crash reporter instance
@@ -48,7 +63,8 @@
 + (id)sharedReporter;
 
 /**
- Creates and returns a raygun reporter with the given API key. Use this to manage the crash reporter singleton yourself.
+ Creates and returns a raygun reporter with the given API key. The reporter will automatically report crashes.
+ Use this to manage the crash reporter singleton yourself.
  
  @warning you should only have one instance of the reporter for your application, do not create multiple instances of the reporter
  or use the shared reporter along side this method.
@@ -58,6 +74,20 @@
  @return a new raygun crash reporter
 */
 - (id)initWithApiKey:(NSString *)theApiKey;
+
+/**
+ Creates and returns a raygun reporter with the given API key and an option to disable crash reporting.
+ Use this to manage the crash reporter singleton yourself.
+ 
+ @warning you should only have one instance of the reporter for your application, do not create multiple instances of the reporter
+ or use the shared reporter along side this method.
+ 
+ @param theApiKey the Raygun API key
+ @param crashReporting Whether or not to enable crash reporting
+ 
+ @return a new raygun crash reporter
+ */
+- (id)initWithApiKey:(NSString *)theApiKey withCrashReporting:(bool)crashReporting;
 
 /**
  Generates a crash report at the current execution point. Useful for testing the crash reporter setup.
@@ -86,6 +116,16 @@
  @warning backtrace will only be populated if you have caught the exception
  */
 - (void)send:(NSException *)exception withTags:(NSArray *)tags withUserCustomData:(NSDictionary *)userCustomData;
+
+/**
+ Manually send an exception name and reason to Raygun with the current state of execution, a list of tags and a dictionary of custom data.
+ */
+- (void)send:(NSString *)exceptionName withReason: (NSString *)exceptionReason withTags: (NSArray *)tags withUserCustomData: (NSDictionary *)userCustomData;
+
+/**
+ Manually send an error to Raygun with the current state of execution, a list of tags and a dictionary of custom data.
+ */
+- (void)sendError:(NSError *)error withTags:(NSArray *)tags withUserCustomData:(NSDictionary *)userCustomData;
 
 /**
  Identify a user to Raygun. This can be a database id or an email address. Anonymous users
